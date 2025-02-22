@@ -1,13 +1,13 @@
 import { ErrorMessage, Field, Form, Formik } from "formik";
-import { nanoid } from "nanoid";
 import { useDispatch, useSelector } from "react-redux";
 import * as Yup from "yup";
-import { addContact } from "../../redux/contactsSlice";
+import { selectContacts } from "../../redux/contactsSlice";
 import s from "./ContactForm.module.css";
+import { addContact } from "../../redux/contactsOps";
 
 const ContactForm = () => {
   const dispatch = useDispatch();
-  const contacts = useSelector((state) => state.contacts.items);
+  const contacts = useSelector(selectContacts);
 
   const initialValues = {
     name: "",
@@ -34,7 +34,7 @@ const ContactForm = () => {
       return;
     }
 
-    dispatch(addContact({ id: nanoid(), ...values }));
+    dispatch(addContact(values));
     resetForm();
   };
 
